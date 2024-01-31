@@ -15,7 +15,7 @@ import webbrowser
 class MainApp(App):
     def build(self):
       self.icon = "icon.png"
-      main_layout = webbrowser.open('http://ruslanak.pythonanywhere.com')
+      webbrowser.open('http://ruslanak.pythonanywhere.com')
       main_layout = BoxLayout(orientation = "vertical")
      
 
@@ -24,6 +24,7 @@ class MainApp(App):
 
       #Bind function with button
       #return btn1
+      
 
       
          
@@ -35,5 +36,4 @@ class MainApp(App):
 if __name__ == '__main__':
     app =MainApp()
     app.run()
-
 
