@@ -1,39 +1,40 @@
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
 
-import webbrowser
-
-
-
-#def any_Function(instance):
-    #webbrowser.open('http://ruslanak.pythonanywhere.com')
+from kivy.uix.widget import Widget
+from kivy.clock import Clock
+from jnius import autoclass
+from android.runnable import run_on_ui_thread
 
 
+WebView = autoclass('android.webkit.WebView')
+WebViewClient = autoclass('android.webkit.WebViewClient')
+activity = autoclass('org.kivy.android.PythonActivity').mActivity
 
-class MainApp(App):
+
+class Wv(Widget):
+    def __init__(self, **kwargs):
+        super(Wv, self).__init__(**kwargs)
+        Clock.schedule_once(self.create_webview, 0)
+
+    @run_on_ui_thread
+    def create_webview(self, *args):
+        webview = WebView(activity)
+        settings = webview.getSettings()
+        settings.setJavaScriptEnabled(True)
+        settings.setUseWideViewPort(True) # enables viewport html meta tags
+        settings.setLoadWithOverviewMode(True) # uses viewport
+        settings.setSupportZoom(True) # enables zoom
+        settings.setBuiltInZoomControls(True) # enables zoom controls
+        wvc = WebViewClient()
+        webview.setWebViewClient(wvc)
+        activity.setContentView(webview)
+        webview.loadUrl('http://www.ruslanak.pythonanywhere.com/')
+
+class ServiceApp(App):
     def build(self):
-      self.icon = "icon.png"
-      webbrowser.open('http://ruslanak.pythonanywhere.com')
-      main_layout = BoxLayout(orientation = "vertical")
-     
-
-      #btn1 = Button(text='Open Link' , size=(200,50), size_hint=(None, None))
-      #btn1.bind(on_press=any_Function)
-
-      #Bind function with button
-      #return btn1
-      
-
-      
-         
-      #return webbrowser.open('http://ruslanak.pythonanywhere.com')
-      return main_layout
-      
+        return Wv()
 
 
 if __name__ == '__main__':
-    app =MainApp()
-    app.run()
+    ServiceApp().run()
 
