@@ -34,6 +34,6 @@ class MainApp(App):
 
 if __name__ == '__main__':
     app =MainApp()
-    MainApp().run()
+    app.run()
 
 
