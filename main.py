@@ -4,7 +4,8 @@ from kivy.app import App
 
 class MainApp(App):
     def build(self):
-        webbrowser.open_new_tab('http://ruslanak.pythonanywhere.com/')
+        webbrowser.open('http://ruslanak.pythonanywhere.com/', new = 0)
+        #webbrowser.open_new_tab('http://ruslanak.pythonanywhere.com/')
 
 
 
