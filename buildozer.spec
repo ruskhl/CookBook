@@ -4,7 +4,7 @@
 title = CookBook
 
 # (str) Package name
-package.name = myapp
+package.name = cook_book
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
