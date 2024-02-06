@@ -47,7 +47,7 @@ requirements = python3==3.7.6,hostpython3==3.7.6,kivy,pillow,Cython==0.29.33
 #presplash.filename = %(source.dir)s/presplash.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/icon.png
+#icon.filename = %(source.dir)s/icon.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
@@ -338,7 +338,7 @@ p4a.branch = release-2022.12.20
 
 # (str) Bootstrap to use for android builds
 # p4a.bootstrap = sdl2
-p4a.bootstrap = webview
+#p4a.bootstrap = webview, sdl2
 
 # (int) port number to specify an explicit --port= p4a argument (eg for bootstrap flask)
 #p4a.port =
