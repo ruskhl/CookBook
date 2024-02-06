@@ -6,6 +6,7 @@ from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtWebEngineCore import *
 from PyQt5.QtCore import QUrl
 
+from kivy.app import App
 
 class WebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
     def __init__(self, parent=None):
