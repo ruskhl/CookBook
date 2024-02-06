@@ -16,7 +16,7 @@ Builder.load_string("""
 
 class MyWebView(MDScreen):
     def Push(self):
-        WebView("https://ruslanak.pythonanywhere.com")
+        WebView("https://www.google.com")
 
 
 class MyWebApp(MDApp):
