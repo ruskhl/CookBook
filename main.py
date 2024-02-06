@@ -1,39 +1,33 @@
-from kivy.app import App
+import sys
+import os
 
-from kivy.uix.widget import Widget
-from kivy.clock import Clock
-from pjnius import autoclass
-from android.runnable import run_on_ui_thread
-
-
-WebView = autoclass('android.webkit.WebView')
-WebViewClient = autoclass('android.webkit.WebViewClient')
-activity = autoclass('org.kivy.android.PythonActivity').mActivity
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtWebEngineCore import *
+from PyQt5.QtCore import QUrl
 
 
-class Wv(Widget):
-    def __init__(self, **kwargs):
-        super(Wv, self).__init__(**kwargs)
-        Clock.schedule_once(self.create_webview, 0)
+class WebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
-    @run_on_ui_thread
-    def create_webview(self, *args):
-        webview = WebView(activity)
-        settings = webview.getSettings()
-        settings.setJavaScriptEnabled(True)
-        settings.setUseWideViewPort(True) # enables viewport html meta tags
-        settings.setLoadWithOverviewMode(True) # uses viewport
-        settings.setSupportZoom(True) # enables zoom
-        settings.setBuiltInZoomControls(True) # enables zoom controls
-        wvc = WebViewClient()
-        webview.setWebViewClient(wvc)
-        activity.setContentView(webview)
-        webview.loadUrl('http://www.ruslanak.pythonanywhere.com/')
-
-class ServiceApp(App):
-    def build(self):
-        return Wv()
+    def interceptRequest(self, info):
+        print(info.requestUrl())
 
 
 if __name__ == '__main__':
-    ServiceApp().run()
+    app = QApplication(sys.argv)
+    profile = QWebEngineProfile()
+    profile.setRequestInterceptor(WebEngineUrlRequestInterceptor())
+    page = QWebEnginePage(profile)
+    page.setUrl(QUrl(
+        "http://ruslanak.pythonanywhere.com/"))
+
+    view = QWebEngineView()
+
+    view.setPage(page)
+    view.resize(1024, 600)
+
+    view.show()
+
+    sys.exit(app.exec_())
