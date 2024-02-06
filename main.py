@@ -1,34 +1,28 @@
-import sys
-import os
+from kivy.uix.widget import Widget
+from kivymd.app import MDApp
+from webview import WebView
+from kivy.lang.builder import Builder
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.screen import MDScreen
+from kivy.utils import platform
 
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWebEngineWidgets import *
-from PyQt5.QtWebEngineCore import *
-from PyQt5.QtCore import QUrl
+Builder.load_string("""
+<MyWebView>
+    MDFlatButton:
+        text: "Push"
+        pos_hint: {"center_x": .5, "center_y": .4}
+        on_press: root.Push()
+""")
 
-from kivy.app import App
+class MyWebView(MDScreen):
+    def Push(self):
+        WebView("https://ruslanak.pythonanywhere.com")
 
-class WebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
-    def __init__(self, parent=None):
-        super().__init__(parent)
 
-    def interceptRequest(self, info):
-        print(info.requestUrl())
+class MyWebApp(MDApp):
+    def build(self):
+        return MyWebView()
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    profile = QWebEngineProfile()
-    profile.setRequestInterceptor(WebEngineUrlRequestInterceptor())
-    page = QWebEnginePage(profile)
-    page.setUrl(QUrl(
-        "http://ruslanak.pythonanywhere.com/"))
-
-    view = QWebEngineView()
-
-    view.setPage(page)
-    view.resize(1024, 600)
-
-    view.show()
-
-    sys.exit(app.exec_())
+    MyWebApp().run()
