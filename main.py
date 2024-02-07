@@ -4,7 +4,6 @@ from webview import WebView
 from kivy.lang.builder import Builder
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.screen import MDScreen
-from kivy.utils import platform
 
 Builder.load_string("""
 <MyWebView>
